@@ -8,4 +8,6 @@ public interface BankService {
     public String openAccount(   String name , String Email , String accountType );
 
     public List<Account> listAccount();
+
+     void deposit(String accountNumber, double amount, String deposit);
 }

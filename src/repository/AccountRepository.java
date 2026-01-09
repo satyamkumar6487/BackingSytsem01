@@ -2,10 +2,7 @@ package repository;
 
 import domain.Account;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AccountRepository {
 
@@ -17,5 +14,13 @@ public class AccountRepository {
 
     public List<Account> findAll() {
 return  new ArrayList<>(accountByNumber.values());
+    }
+
+    public Optional<Account> findByNumber(String accountNumber) {
+
+        return Optional.ofNullable(accountByNumber.get(accountNumber));
+
+
+
     }
 }

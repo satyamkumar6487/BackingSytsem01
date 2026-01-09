@@ -1,6 +1,6 @@
 package app;
 
-import domain.Type;
+
 import service.BankService;
 import service.BankServiceImpl;
 
@@ -39,7 +39,7 @@ System.out.println("CHOSE");
 
     switch (Chose) {
         case "1" -> openAccount(sc , bankService);
-        case "2" -> deposit(sc);
+        case "2" -> deposit(sc , bankService);
         case "3" -> withdraw(sc);
         case "4" -> transfer(sc);
         case "5" -> statements(sc);
@@ -72,15 +72,30 @@ System.out.println("CHOSE");
 
         Double initial = Double.valueOf(amountstr);
 
-        bankService.openAccount(name, Email, Type);
-System.out.println(" Account is Created");
+        String accountNumber =  bankService.openAccount(name, Email, Type);
+        if (initial > 0 )
+            bankService.deposit(accountNumber , initial ,"Initial Deposit");
+
+System.out.println(" Account  Opened" + accountNumber);
 
 
 
 
     }
 
-        private static void deposit(Scanner sc) {
+        private static void deposit(Scanner sc  , BankService bankService ) {
+
+        System.out.println("Account Number");
+
+        String accountNumber = sc.nextLine().trim();
+
+        System .out.println("Amount");
+        double amount = Double.valueOf(sc.nextLine().trim());
+
+        bankService.deposit(accountNumber , amount , "Deposit");
+        System.out.println("Deposited");
+
+
     }
 
     private static void withdraw(Scanner sc) {
