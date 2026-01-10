@@ -40,7 +40,7 @@ System.out.println("CHOSE");
     switch (Chose) {
         case "1" -> openAccount(sc , bankService);
         case "2" -> deposit(sc , bankService);
-        case "3" -> withdraw(sc);
+        case "3" -> withdraw(sc, bankService);
         case "4" -> transfer(sc);
         case "5" -> statements(sc);
         case "6" -> listAccount(sc , bankService);
@@ -98,7 +98,19 @@ System.out.println(" Account  Opened" + accountNumber);
 
     }
 
-    private static void withdraw(Scanner sc) {
+    private static void withdraw(Scanner sc , BankService bankService) {
+        System.out.println("Account Number");
+        String accountNumber = sc.nextLine().trim();
+
+        System.out.println("Amount");
+        Double amount = Double.valueOf(sc.nextLine().trim());
+
+        bankService.withdraw(accountNumber, amount , " Withdrawl");
+
+        System.out.println("Withdrawn");
+
+
+
 
     }
 

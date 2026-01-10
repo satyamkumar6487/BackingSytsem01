@@ -58,6 +58,35 @@ accountRepository.save(account);
         );
         transactionRepository.add(transaction);
     }
+
+    @Override
+    public void withdraw(String accountNumber, Double amount, String note) {
+
+        Account account = accountRepository.findByNumber(accountNumber)
+                .orElseThrow(() -> new RuntimeException( "Account not found " + accountNumber)) ;
+
+        if (account.getBalance() .compareTo(amount) < 0)
+            throw new RuntimeException(" Insufficient Balance");
+
+
+        account.setBalance(account.getBalance()-amount);
+
+
+        Transaction transaction = new Transaction(
+                UUID.randomUUID().toString(),
+                account.getAccountNumber(),
+                amount,
+                LocalDateTime.now(),
+                note,
+                Type.WITHDRAW
+        );
+transactionRepository.add(transaction);
+
+
+
+
+    }
+
     // generate AccountNumber
     private String getAccountyNumber () {
 
