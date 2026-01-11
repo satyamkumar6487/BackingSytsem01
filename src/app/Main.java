@@ -42,9 +42,9 @@ System.out.println("CHOSE");
         case "2" -> deposit(sc , bankService);
         case "3" -> withdraw(sc, bankService);
         case "4" -> transfer(sc , bankService);
-        case "5" -> statements(sc);
+        case "5" -> statements(sc , bankService);
         case "6" -> listAccount(sc , bankService);
-        case "7" -> searchAccount(sc);
+        case "7" -> searchAccount(sc , bankService);
         case "0" -> running = false;
 
 
@@ -129,7 +129,16 @@ System.out.println(" Account  Opened" + accountNumber);
 
     }
 
-    private static void statements(Scanner sc) {
+    private static void statements(Scanner sc , BankService bankService) {
+
+        System .out.println("Account number");
+
+        String account = sc.nextLine().trim();
+
+        bankService.getStatement(account).forEach(t -> {
+            System.out.println(t.getTimestamp() + " |"+ t.getType() + " |" + t.getAmount());
+        });
+
 
     }
 
@@ -140,7 +149,12 @@ bankService.listAccount().forEach(a-> {
 
 
     }
-    private static void searchAccount(Scanner sc) {
+    private static void searchAccount(Scanner sc ,  BankService  bankservice) {
+
+        System .out.println("Customer name contailns");
+        String q = sc.nextLine().trim();
+        bankservice.searchAcoountByCustomername(q);
+
 
     }
 

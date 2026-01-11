@@ -23,4 +23,10 @@ return  new ArrayList<>(accountByNumber.values());
 
 
     }
+
+    public Account findByCustomerId(String id) {
+
+
+
+    }
 }
