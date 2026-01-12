@@ -69,7 +69,7 @@ System.out.println("CHOSE");
 
         System .out.println("Initial Depostit");
         String amountstr = sc. nextLine().trim();
-
+if(amountstr.isBlank()) amountstr = "0";
         Double initial = Double.valueOf(amountstr);
 
         String accountNumber =  bankService.openAccount(name, Email, Type);

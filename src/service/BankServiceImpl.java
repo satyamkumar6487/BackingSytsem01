@@ -10,6 +10,7 @@ import exceptions.ValidationException;
 import repository.AccountRepository;
 import repository.CustomerRepository;
 import repository.TransactionRepository;
+import util.Validation;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,8 +25,42 @@ public class BankServiceImpl implements  BankService{
     private final TransactionRepository transactionRepository = new TransactionRepository();
     private  final CustomerRepository customerRepository = new CustomerRepository();
 
+
+    private final Validation<String> validatename  = name -> {
+        if (name == null || name.isBlank()) throw new ValidationException("Name is ReQuired");
+    };
+
+
+    private final Validation<String> validateEmail = Email -> {
+        if (Email == null || !Email.contains("@")) throw new ValidationException("Email is required");
+
+    };
+
+    private final Validation<String> validateType = Type -> {
+
+        if (Type == null  || !(Type.equalsIgnoreCase("SAVING")) || Type.equalsIgnoreCase("CURRENT")) throw
+        new ValidationException("Type must be Saving or Current");
+    };
+
+private final Validation<Double>  validateAmountPositive = amount ->{
+   if (amount == null|| amount < 0)
+       throw new ValidationException("Please enter valid amount");
+
+    };
+
+
+
+
+
+
+
     @Override
-    public String openAccount(  String name, String Email, String accountType) {
+    public String openAccount(  String name, String Email, String accountType ) {
+
+        validatename.validate(name);
+        validateEmail.validate(Email);
+        validateType.validate(accountType);
+
 
         String CustomerId = UUID.randomUUID().toString();
 
@@ -58,6 +93,7 @@ accountRepository.save(account);
     @Override
     public void deposit(String accountNumber, double amount, String note) {
 
+        validateAmountPositive.validate(amount);
         Account account = accountRepository.findByNumber(accountNumber)
                 .orElseThrow(() -> new AccountNotFoundException( "Account Not Found" + accountNumber));
         account.setBalance(Double.valueOf(account.getBalance() + amount));
@@ -104,6 +140,8 @@ transactionRepository.add(transaction);
 
     @Override
     public void transfer(String fromAcc, String toAcc, Double amount, String note) {
+        validateAmountPositive.validate(amount);
+
 if (fromAcc.equals(toAcc))
     throw new ValidationException( "cannot transfer to your own account");
 
