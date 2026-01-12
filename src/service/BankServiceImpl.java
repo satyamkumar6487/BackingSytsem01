@@ -24,13 +24,21 @@ public class BankServiceImpl implements  BankService{
     @Override
     public String openAccount(  String name, String Email, String accountType) {
 
-        String customerid = UUID.randomUUID().toString();
+        String CustomerId = UUID.randomUUID().toString();
+
+
+        Customer c = new Customer(CustomerId, name, Email);
+        customerRepository.save(c);
+
+
+
+
 
         String accountNumber = getAccountyNumber();
 
 
 
-        Account account = new Account( accountNumber, accountType , (double) 0 , customerid);
+        Account account = new Account( accountNumber, accountType , (double) 0 , CustomerId);
 
 accountRepository.save(account);
         return accountNumber;
@@ -144,10 +152,11 @@ transactionRepository.add(new Transaction(to.getAccountNumber(),
         List<Account> result = new ArrayList<>();
         for (Customer c : customerRepository.findAll()){
 
-            if (c.getName().toLowerCase().contains(q))
-                result.add(accountRepository.findByCustomerId(c.getId()));
+            if (c.getName().toLowerCase().contains(query))
+                result.addAll( accountRepository.findByCustomerId(c.getId()));
 
         }
+        result.sort(Comparator.comparing(Account:: getAccountNumber));
 
         return result;
     }

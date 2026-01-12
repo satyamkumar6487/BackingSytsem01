@@ -16,4 +16,7 @@ public List<Customer> findAll() {
 }
 
 
+    public void save(Customer c) {
+    customersByid.put(c.getId(),c);
+    }
 }

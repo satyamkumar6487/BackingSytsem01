@@ -24,8 +24,14 @@ return  new ArrayList<>(accountByNumber.values());
 
     }
 
-    public Account findByCustomerId(String id) {
+    public  List<Account> findByCustomerId(String customerId) {
 
+       List<Account> result = new ArrayList<>();
+       for (Account a : accountByNumber.values()){
+           if(a.getCustomerId().equals(customerId))
+               result.add(a);
+       }
+return  result;
 
 
     }

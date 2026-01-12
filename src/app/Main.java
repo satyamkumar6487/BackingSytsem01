@@ -151,9 +151,12 @@ bankService.listAccount().forEach(a-> {
     }
     private static void searchAccount(Scanner sc ,  BankService  bankservice) {
 
-        System .out.println("Customer name contailns");
+        System .out.println("Customer name contains");
         String q = sc.nextLine().trim();
-        bankservice.searchAcoountByCustomername(q);
+        bankservice.searchAcoountByCustomername(q).forEach(account ->
+
+                System.out.println(account.getAccountNumber() + " | " + account.getAccountType()  + " | " + account.getBalance()));
+
 
 
     }
